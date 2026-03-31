@@ -14,22 +14,40 @@
     <!-- LEFT PANEL: Controls -->
     <div class="panel">
       <div class="panel-title">CONTROL DECK</div>
-      
-      <label for="account-select">PLAYER (YouTube Account):</label>
-      <select id="account-select">
-        <option value="">LOADING...</option>
-      </select>
-
-      <div style="margin: 15px 0;">
-        <label style="cursor: pointer;">
-          <input type="checkbox" id="upload-checkbox" style="width: auto; margin-right: 8px;" checked>
-          UPLOAD TO YOUTUBE
-        </label>
+      <div class="tabs">
+        <button class="tab-btn active" id="tab-youtube" onclick="switchTab('youtube')">[ YOUTUBE ]</button>
+        <button class="tab-btn" id="tab-twitter" onclick="switchTab('twitter')">[ TWITTER ]</button>
       </div>
 
-      <button id="btn-generate" onclick="startGeneration()">[ START GENERATION ]</button>
+      <!-- YOUTUBE TAB -->
+      <div id="youtube-view" class="tab-view active">
+        <label for="account-select">PLAYER (YouTube Account):</label>
+        <select id="account-select">
+          <option value="">LOADING...</option>
+        </select>
 
+        <div style="margin: 15px 0;">
+          <label style="cursor: pointer;">
+            <input type="checkbox" id="upload-checkbox" style="width: auto; margin-right: 8px;" checked>
+            UPLOAD TO YOUTUBE
+          </label>
+        </div>
+
+        <button id="btn-generate" class="action-btn" onclick="startGeneration()">[ START GENERATION ]</button>
+      </div>
+
+      <!-- TWITTER TAB -->
+      <div id="twitter-view" class="tab-view">
+        <label for="twitter-account-select">PLAYER (Twitter Account):</label>
+        <select id="twitter-account-select">
+          <option value="">LOADING...</option>
+        </select>
+
+        <button id="btn-twitter-topic" class="action-btn" onclick="startTwitterGeneration('topic')">[ POST TOPIC ]</button>
+        <button id="btn-twitter-viral" class="action-btn" onclick="startTwitterGeneration('viral_meme')">[ POST VIRAL MEME ]</button>
+      </div>
       
+      <!-- SHARED STATUS AREA -->
       <div id="status-area" style="display: none; margin-top: 30px;">
         <div class="status-text blink" id="status-label">INITIALIZING...</div>
         <div class="progress-bar-container">
@@ -59,10 +77,24 @@
     <!-- RIGHT PANEL: Settings -->
     <div class="panel" style="overflow-y: auto; max-height: 500px;">
       <div class="panel-title">GAME SETTINGS</div>
-      <form id="settings-form" onsubmit="saveSettings(event)">
-        <div id="settings-container">LOADING SETTINGS...</div>
-        <button type="submit" id="btn-save-settings">[ SAVE SETTINGS ]</button>
-      </form>
+      <div class="tabs">
+        <button class="tab-btn active" id="settings-tab-youtube" onclick="switchSettingsTab('youtube')">[ YOUTUBE SETTINGS ]</button>
+        <button class="tab-btn" id="settings-tab-twitter" onclick="switchSettingsTab('twitter')">[ TWITTER SETTINGS ]</button>
+      </div>
+
+      <div id="settings-youtube-view" class="tab-view active">
+        <form id="settings-youtube-form" onsubmit="saveYouTubeSettings(event)">
+          <div id="settings-youtube-container">LOADING YOUTUBE SETTINGS...</div>
+          <button type="submit" id="btn-save-youtube-settings">[ SAVE YOUTUBE SETTINGS ]</button>
+        </form>
+      </div>
+
+      <div id="settings-twitter-view" class="tab-view">
+        <form id="settings-twitter-form" onsubmit="saveTwitterSettings(event)">
+          <div id="settings-twitter-container">LOADING TWITTER SETTINGS...</div>
+          <button type="submit" id="btn-save-twitter-settings">[ SAVE TWITTER SETTINGS ]</button>
+        </form>
+      </div>
       <div id="settings-msg" class="blink" style="color: yellow; margin-top:10px; font-size: 10px;"></div>
     </div>
 
@@ -78,7 +110,8 @@
 
   <script>
     let pollInterval = null;
-    let currentConfig = {};
+    let currentYouTubeConfig = {};
+    let currentTwitterSettings = {};
 
     async function fetchAccounts() {
       try {
@@ -98,6 +131,44 @@
           sel.appendChild(opt);
         });
       } catch (e) { console.error(e); }
+    }
+
+    async function fetchTwitterAccounts() {
+      try {
+        const res = await fetch('/api/twitter_accounts');
+        const accs = await res.json();
+        const sel = document.getElementById('twitter-account-select');
+        sel.innerHTML = '';
+        if (accs.length === 0) {
+          sel.innerHTML = '<option>NO ACCOUNTS FOUND</option>';
+          document.getElementById('btn-twitter-topic').disabled = true;
+          document.getElementById('btn-twitter-viral').disabled = true;
+          return;
+        }
+        accs.forEach((acc, index) => {
+          let opt = document.createElement('option');
+          opt.value = index;
+          opt.innerText = `${acc.nickname} (${acc.topic || 'No topic'})`;
+          sel.appendChild(opt);
+        });
+      } catch (e) { console.error(e); }
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId + '-view').classList.add('active');
+      document.getElementById('tab-' + tabId).classList.add('active');
+      switchSettingsTab(tabId);
+    }
+
+    function switchSettingsTab(tabId) {
+      document.querySelectorAll('#settings-youtube-view, #settings-twitter-view').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('#settings-tab-youtube, #settings-tab-twitter').forEach(el => el.classList.remove('active'));
+
+      document.getElementById('settings-' + tabId + '-view').classList.add('active');
+      document.getElementById('settings-tab-' + tabId).classList.add('active');
     }
 
     async function fetchStats() {
@@ -132,17 +203,14 @@
       } catch(e) { console.error(e); }
     }
 
-    async function fetchConfig() {
+    async function fetchYouTubeSettings() {
       try {
-        const res = await fetch('/api/config');
-        currentConfig = await res.json();
-        const container = document.getElementById('settings-container');
+        const res = await fetch('/api/settings/youtube');
+        currentYouTubeConfig = await res.json();
+        const container = document.getElementById('settings-youtube-container');
         container.innerHTML = '';
         
-        // Allowed keys to show
-        for (const [key, value] of Object.entries(currentConfig)) {
-            if (key === "email") continue; // skip nested for simplicity
-            
+        for (const [key, value] of Object.entries(currentYouTubeConfig)) {
             let wrap = document.createElement('div');
             wrap.style.marginBottom = "15px";
 
@@ -177,10 +245,10 @@
       } catch(e) { console.error(e); }
     }
 
-    async function saveSettings(e) {
+    async function saveYouTubeSettings(e) {
       e.preventDefault();
       const payload = {};
-      const inputs = document.querySelectorAll('#settings-container input');
+      const inputs = document.querySelectorAll('#settings-youtube-container input');
       inputs.forEach(inp => {
           if (inp.type === "checkbox") {
               payload[inp.name] = inp.checked;
@@ -194,7 +262,7 @@
       const msg = document.getElementById('settings-msg');
       try {
           msg.innerText = "SAVING...";
-          const res = await fetch('/api/config', {
+          const res = await fetch('/api/settings/youtube', {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify(payload)
@@ -208,6 +276,106 @@
       }
     }
 
+    async function fetchTwitterSettings() {
+      try {
+        const idx = document.getElementById('twitter-account-select').value || 0;
+        const res = await fetch(`/api/settings/twitter?account_index=${idx}`);
+        currentTwitterSettings = await res.json();
+        const container = document.getElementById('settings-twitter-container');
+        container.innerHTML = '';
+
+        if (!currentTwitterSettings.account) {
+          container.innerHTML = '<div>NO TWITTER ACCOUNT SELECTED</div>';
+          return;
+        }
+
+        const fieldMap = {
+          "nickname": currentTwitterSettings.account.nickname,
+          "topic": currentTwitterSettings.account.topic,
+          "account_firefox_profile": currentTwitterSettings.account.firefox_profile,
+          "twitter_language": currentTwitterSettings.config.twitter_language,
+          "headless": currentTwitterSettings.config.headless,
+          "default_firefox_profile": currentTwitterSettings.config.firefox_profile
+        };
+
+        for (const [key, value] of Object.entries(fieldMap)) {
+          let wrap = document.createElement('div');
+          wrap.style.marginBottom = "15px";
+
+          let lbl = document.createElement('label');
+          lbl.innerText = key.toUpperCase().replace(/_/g, ' ');
+          wrap.appendChild(lbl);
+
+          let inp = document.createElement('input');
+          inp.name = key;
+          inp.id = `tw_${key}`;
+          inp.style.marginBottom = "0px";
+
+          if (typeof value === "boolean") {
+            inp.type = "checkbox";
+            inp.checked = value;
+            inp.style.width = "auto";
+            wrap.style.display = "flex";
+            wrap.style.alignItems = "center";
+            wrap.style.gap = "10px";
+            lbl.style.marginBottom = "0";
+          } else {
+            inp.type = "text";
+            inp.value = value || "";
+          }
+
+          wrap.appendChild(inp);
+          container.appendChild(wrap);
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    async function saveTwitterSettings(e) {
+      e.preventDefault();
+      const idx = document.getElementById('twitter-account-select').value;
+      if (idx === "") return;
+
+      const account_updates = {};
+      const config_updates = {};
+      const inputs = document.querySelectorAll('#settings-twitter-container input');
+
+      inputs.forEach(inp => {
+        const value = inp.type === "checkbox" ? inp.checked : inp.value;
+        if (inp.name === "nickname" || inp.name === "topic") {
+          account_updates[inp.name] = value;
+        } else if (inp.name === "account_firefox_profile") {
+          account_updates["firefox_profile"] = value;
+        } else if (inp.name === "twitter_language" || inp.name === "headless") {
+          config_updates[inp.name] = value;
+        } else if (inp.name === "default_firefox_profile") {
+          config_updates["firefox_profile"] = value;
+        }
+      });
+
+      const msg = document.getElementById('settings-msg');
+      try {
+        msg.innerText = "SAVING...";
+        const res = await fetch('/api/settings/twitter', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            account_index: parseInt(idx),
+            account_updates,
+            config_updates
+          })
+        });
+        if (res.ok) {
+          msg.innerText = "TWITTER SETTINGS SAVED!";
+          fetchTwitterAccounts();
+          setTimeout(() => { msg.innerText = ""; }, 3000);
+        } else {
+          throw new Error("Server error");
+        }
+      } catch (err) {
+        msg.innerText = "ERROR SAVING TWITTER SETTINGS";
+      }
+    }
+
     function refreshStats() {
       fetchStats();
       fetchVideos();
@@ -218,7 +386,7 @@
       const upload = document.getElementById('upload-checkbox').checked;
       if (idx === "") return;
 
-      document.getElementById('btn-generate').disabled = true;
+      document.querySelectorAll('.action-btn').forEach(btn => btn.disabled = true);
       document.getElementById('status-area').style.display = 'block';
       document.getElementById('error-label').innerText = '';
       
@@ -232,7 +400,34 @@
         if (!res.ok) {
           const err = await res.json();
           alert('Error: ' + err.error);
-          document.getElementById('btn-generate').disabled = false;
+          document.querySelectorAll('.action-btn').forEach(btn => btn.disabled = false);
+          return;
+        }
+
+        if (pollInterval) clearInterval(pollInterval);
+        pollInterval = setInterval(pollStatus, 2000);
+      } catch (e) { console.error(e); }
+    }
+
+    async function startTwitterGeneration(actionType) {
+      const idx = document.getElementById('twitter-account-select').value;
+      if (idx === "") return;
+
+      document.querySelectorAll('.action-btn').forEach(btn => btn.disabled = true);
+      document.getElementById('status-area').style.display = 'block';
+      document.getElementById('error-label').innerText = '';
+      
+      try {
+        const res = await fetch('/api/generate_twitter', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({account_index: parseInt(idx), action: actionType})
+        });
+        
+        if (!res.ok) {
+          const err = await res.json();
+          alert('Error: ' + err.error);
+          document.querySelectorAll('.action-btn').forEach(btn => btn.disabled = false);
           return;
         }
 
@@ -253,12 +448,12 @@
 
         if (state.error) {
           clearInterval(pollInterval);
-          document.getElementById('btn-generate').disabled = false;
+          document.querySelectorAll('.action-btn').forEach(btn => btn.disabled = false);
           document.getElementById('error-label').innerText = 'ERROR: ' + state.error;
           document.getElementById('status-label').classList.remove('blink');
         } else if (!state.running && state.progress === 100) {
           clearInterval(pollInterval);
-          document.getElementById('btn-generate').disabled = false;
+          document.querySelectorAll('.action-btn').forEach(btn => btn.disabled = false);
           document.getElementById('status-label').innerText = 'MISSION ACCOMPLISHED!';
           document.getElementById('status-label').classList.remove('blink');
           refreshStats();
@@ -268,9 +463,17 @@
 
     window.onload = () => {
       fetchAccounts();
-      fetchConfig();
+      fetchTwitterAccounts();
+      fetchYouTubeSettings();
+      fetchTwitterSettings();
       refreshStats();
     };
+
+    document.addEventListener('change', (e) => {
+      if (e.target && e.target.id === 'twitter-account-select') {
+        fetchTwitterSettings();
+      }
+    });
   </script>
 </body>
 </html>

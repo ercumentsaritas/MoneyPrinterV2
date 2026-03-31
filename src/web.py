@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from flask import Flask, render_template, jsonify, request, send_from_directory
 from config import ROOT_DIR, get_gemini_llm_api_key, get_gemini_llm_model, reload_config, _load_config
-from cache import get_accounts, get_youtube_cache_path
+from cache import get_accounts, get_provider_cache_path
 
 app = Flask(
     __name__,
@@ -44,6 +44,14 @@ def index():
 def api_accounts():
     try:
         accounts = get_accounts("youtube")
+        return jsonify(accounts)
+    except Exception as e:
+        return jsonify([])
+
+@app.route("/api/twitter_accounts")
+def api_twitter_accounts():
+    try:
+        accounts = get_accounts("twitter")
         return jsonify(accounts)
     except Exception as e:
         return jsonify([])
@@ -77,6 +85,150 @@ def api_config():
         with open(config_path, "r") as f:
             cfg = json.load(f)
         return jsonify(cfg)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+def _update_provider_account(provider: str, account_index: int, updates: dict) -> None:
+    """
+    Update a provider account by index in its cache file.
+    """
+    cache_path = get_provider_cache_path(provider)
+    with open(cache_path, "r") as f:
+        payload = json.load(f)
+
+    accounts = payload.get("accounts", [])
+    if account_index < 0 or account_index >= len(accounts):
+        raise IndexError("Invalid account index")
+
+    accounts[account_index].update(updates)
+    payload["accounts"] = accounts
+
+    with open(cache_path, "w") as f:
+        json.dump(payload, f, indent=4)
+
+
+@app.route("/api/settings/youtube")
+def api_settings_youtube():
+    """
+    Return YouTube settings (subset of config.json).
+    """
+    config_path = os.path.join(ROOT_DIR, "config.json")
+    try:
+        with open(config_path, "r") as f:
+            cfg = json.load(f)
+
+        keys = [
+            "firefox_profile",
+            "headless",
+            "threads",
+            "is_for_kids",
+            "twitter_language",
+            "font",
+            "imagemagick_path",
+            "pexels_api_key",
+            "tts_voice",
+            "tts_rate",
+            "tts_pitch",
+            "use_background_music",
+            "video_format",
+            "enable_ken_burns",
+            "enable_loop",
+        ]
+        out = {k: cfg.get(k) for k in keys if k in cfg}
+        return jsonify(out)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/settings/youtube", methods=["POST"])
+def api_settings_youtube_update():
+    """
+    Update only YouTube settings in config.json.
+    """
+    updates = request.json or {}
+    config_path = os.path.join(ROOT_DIR, "config.json")
+    try:
+        with open(config_path, "r") as f:
+            cfg = json.load(f)
+
+        for k, v in updates.items():
+            cfg[k] = v
+
+        with open(config_path, "w") as f:
+            json.dump(cfg, f, indent=2)
+
+        reload_config()
+        return jsonify({"ok": True})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/settings/twitter")
+def api_settings_twitter():
+    """
+    Return Twitter settings (selected account details + twitter config subset).
+    """
+    try:
+        account_index = int(request.args.get("account_index", 0))
+        accounts = get_accounts("twitter")
+        if not accounts:
+            return jsonify({"account": None, "config": {}})
+        if account_index < 0 or account_index >= len(accounts):
+            return jsonify({"error": "Invalid account index"}), 400
+
+        account = accounts[account_index]
+
+        config_path = os.path.join(ROOT_DIR, "config.json")
+        with open(config_path, "r") as f:
+            cfg = json.load(f)
+
+        config_subset = {
+            "twitter_language": cfg.get("twitter_language"),
+            "headless": cfg.get("headless"),
+            "firefox_profile": cfg.get("firefox_profile"),
+        }
+
+        return jsonify({
+            "account": {
+                "nickname": account.get("nickname", ""),
+                "topic": account.get("topic", ""),
+                "firefox_profile": account.get("firefox_profile", ""),
+            },
+            "config": config_subset,
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/settings/twitter", methods=["POST"])
+def api_settings_twitter_update():
+    """
+    Update Twitter account details and twitter-related config.
+    """
+    data = request.json or {}
+    account_index = int(data.get("account_index", 0))
+    account_updates = data.get("account_updates", {})
+    config_updates = data.get("config_updates", {})
+
+    try:
+        if account_updates:
+            _update_provider_account("twitter", account_index, account_updates)
+
+        if config_updates:
+            config_path = os.path.join(ROOT_DIR, "config.json")
+            with open(config_path, "r") as f:
+                cfg = json.load(f)
+
+            for k, v in config_updates.items():
+                cfg[k] = v
+
+            with open(config_path, "w") as f:
+                json.dump(cfg, f, indent=2)
+
+            reload_config()
+
+        return jsonify({"ok": True})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -168,6 +320,50 @@ def api_generate():
                     raise RuntimeError(f"YouTube upload failed: {str(e)}")
 
             _generation_state.update(step="Done!", progress=100, video_path=yt.video_path)
+
+        except Exception as e:
+            _generation_state.update(step="Error", error=str(e))
+            import traceback
+            traceback.print_exc()
+        finally:
+            _generation_state["running"] = False
+
+    t = threading.Thread(target=run_generation, daemon=True)
+    t.start()
+    return jsonify({"ok": True})
+
+@app.route("/api/generate_twitter", methods=["POST"])
+def api_generate_twitter():
+    """Start Twitter generation in background thread."""
+    if _generation_state["running"]:
+        return jsonify({"error": "Generation already running"}), 409
+
+    data = request.json or {}
+    account_idx = data.get("account_index", 0)
+    action = data.get("action", "topic")
+
+    def run_generation():
+        _generation_state.update(running=True, step="Initializing...", progress=5, error=None, video_path=None)
+        try:
+            from classes.Twitter import Twitter
+
+            accounts = get_accounts("twitter")
+            if not accounts:
+                raise RuntimeError("No Twitter accounts configured.")
+
+            acc = accounts[account_idx]
+
+            _generation_state.update(step="Creating Twitter instance...", progress=20)
+            tw = Twitter(acc["id"], acc["nickname"], acc.get("firefox_profile", ""), acc.get("topic", ""))
+
+            if action == "viral_meme":
+                _generation_state.update(step="Scraping & Posting Viral Meme...", progress=50)
+                tw.fetch_and_post_viral_meme()
+            else:
+                _generation_state.update(step="Posting Topic Content...", progress=50)
+                tw.post()
+
+            _generation_state.update(step="Done!", progress=100)
 
         except Exception as e:
             _generation_state.update(step="Error", error=str(e))
