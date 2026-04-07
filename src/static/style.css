@@ -210,3 +210,42 @@ label {
 .error-text {
   color: #ff0000;
 }
+
+/* Tab System */
+.tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 4px solid var(--border-color);
+}
+
+.tab-btn {
+  background-color: transparent;
+  color: var(--text-color);
+  border: none;
+  font-size: 14px;
+  padding: 10px 20px;
+  margin: 0;
+  width: auto;
+  box-shadow: none;
+  border-bottom: 4px solid transparent;
+  margin-bottom: -4px;
+}
+
+.tab-btn.active {
+  background-color: var(--panel-bg);
+  color: #fff;
+  border-bottom: 4px solid var(--highlight-color);
+}
+
+.tab-btn:hover {
+  background-color: rgba(255, 0, 85, 0.2);
+  transform: none;
+}
+
+.tab-view {
+  display: none;
+}
+
+.tab-view.active {
+  display: block;
+}

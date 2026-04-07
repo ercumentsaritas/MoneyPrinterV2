@@ -1,3 +1,8 @@
+import PIL.Image
+# moviepy 1.0.3 uses PIL.Image.ANTIALIAS which was removed in Pillow 10.0.0
+if not hasattr(PIL.Image, "ANTIALIAS"):
+    PIL.Image.ANTIALIAS = PIL.Image.LANCZOS
+
 import re
 import json
 import time
@@ -341,9 +346,8 @@ Return ONLY the CTA text in ALL CAPS, nothing else. No quotes, no explanation.""
     def generate_metadata(self, _retry: int = 0) -> dict:
         """
         Generates Video metadata for the to-be-uploaded YouTube Short (Title, Description).
-        Follows YouTube Shorts SEO best practices:
-        - Title: 40-70 chars, keyword-first, curiosity-driven, NO hashtags
-        - Description: 1-3 sentence summary + 3-5 hashtags at bottom
+        Style: Hook question + emoji + | + category tag for title;
+               Curiosity question + discovery sentence + emojis + hashtags for description.
 
         Returns:
             metadata (dict): The generated metadata.
@@ -356,19 +360,23 @@ Return ONLY the CTA text in ALL CAPS, nothing else. No quotes, no explanation.""
 Subject: {self.subject}
 Language: {self.language}
 
-STRICT RULES:
-1. LENGTH: The title MUST be between 40 and 70 characters. This is critical — titles over 70 characters get cut off on mobile.
-2. KEYWORD FIRST: Put the most important keyword(s) at the very beginning of the title (e.g. "AI", "LLM", "ChatGPT", etc.).
-3. CURIOSITY + CLARITY: The title must clearly tell what the video is about AND trigger curiosity/emotion. Avoid clickbait that doesn't match content.
-4. NO HASHTAGS in the title. Keep it clean.
-5. NO quotation marks around the title.
-6. NO emojis in the title.
+FORMAT (follow EXACTLY):
+[Catchy question or provocative hook]? [ONE relevant emoji] | [Short category/topic tag]
 
-Good examples:
-- "AI is hiding this from you"
-- "3 things LLMs can do that will shock you"
-- "ChatGPT just made this job obsolete"
-- "This AI tool replaces your entire workflow"
+STRICT RULES:
+1. The first part MUST be a curiosity-driven question or bold statement that ends with "?" or a dramatic claim.
+2. Add exactly ONE relevant emoji right after the question mark or statement.
+3. Then add a pipe character "|" followed by a short 1-3 word category tag (e.g. "Cybersecurity 2.0", "AI Revolution", "Future of Work", "Tech Secrets").
+4. TOTAL LENGTH must be between 40 and 70 characters (including emoji and pipe).
+5. NO hashtags. NO quotation marks around the title.
+6. Write in {self.language}.
+
+EXAMPLES:
+- Is AI Becoming a Hacker? 🎉 | Cybersecurity 2.0
+- Can ChatGPT Replace Doctors? 🤖 | AI in Medicine
+- Will Robots Steal Your Job? 🚀 | Future of Work
+- Is Your Password Safe Anymore? 🔐 | Digital Security
+- Did AI Just Break the Internet? 💥 | Tech Revolution
 
 Return ONLY the title text, nothing else."""
 
@@ -377,12 +385,11 @@ Return ONLY the title text, nothing else."""
         # Remove any hashtags the LLM might have sneaked in
         title = re.sub(r'#\S+', '', title).strip()
 
-        # Validate length
-        if len(title) > 70:
+        # Validate length (more lenient — emoji + pipe tag adds chars)
+        if len(title) > 80:
             if _retry >= MAX_RETRIES:
-                warning("Title still too long after retries. Truncating to 70 chars.")
-                # Try to truncate at last space before 70
-                truncated = title[:70]
+                warning("Title still too long after retries. Truncating.")
+                truncated = title[:75]
                 last_space = truncated.rfind(' ')
                 if last_space > 30:
                     title = truncated[:last_space]
@@ -390,27 +397,33 @@ Return ONLY the title text, nothing else."""
                     title = truncated
             else:
                 if get_verbose():
-                    warning(f"Generated Title is {len(title)} chars (max 70). Retrying ({_retry + 1}/{MAX_RETRIES})...")
+                    warning(f"Generated Title is {len(title)} chars (max 80). Retrying ({_retry + 1}/{MAX_RETRIES})...")
                 return self.generate_metadata(_retry + 1)
 
-        # ── DESCRIPTION (SEO Optimized — 2026) ─────────────────
+        # ── DESCRIPTION (Engagement-Style — 2026) ─────────────────
         description_prompt = f"""Generate a YouTube Shorts description for the following video.
 
 Subject: {self.subject}
 Script: {self.script}
 Language: {self.language}
 
+FORMAT (follow EXACTLY):
+Line 1: A thought-provoking question OR a bold opening statement about the topic that hooks the reader.
+Line 2: A "Discover..." or "Learn..." or "Find out..." sentence that tells the viewer what they'll get from watching, ending with "in just 60 seconds!" and 2 relevant emojis.
+Line 3: (blank line)
+Line 4: Exactly 5 hashtags, all relevant to the topic. Do NOT include #shorts.
+
 STRICT RULES:
-1. FIRST 1-2 LINES: Write a short, compelling summary of what the video covers and what the viewer will learn. This is the most visible part on mobile — make it count.
-2. NATURAL KEYWORDS: Naturally weave in relevant keywords (like "AI", "LLM", "machine learning", "automation", etc.) — do NOT keyword-stuff.
-3. TOTAL LENGTH: 1-3 sentences for the summary. Keep it concise and meaningful.
-4. HASHTAGS: After the summary, leave one blank line, then add exactly 3-5 relevant hashtags. Include #shorts as one of them.
+1. The first line MUST be a question or a dramatic hook that creates curiosity.
+2. The second line MUST include "in just 60 seconds!" or similar urgency phrase.
+3. Add exactly 2 relevant emojis at the end of the second line (e.g. 🔒 🧑‍💻, 🤖 💡, 🚀 🔥).
+4. Hashtags: exactly 5 topic-relevant hashtags. NO #shorts.
 5. NO quotation marks around the description.
+6. Write in {self.language}.
 
-Example format:
-This AI tool just replaced an entire marketing team in under 60 seconds. Here's how it works and why you need to try it today.
-
-#shorts #AI #Automation #ArtificialIntelligence #TechTips
+EXAMPLE:
+Can artificial intelligence stop cyberattacks, or is it becoming the next big threat itself? Discover the future of AI and cybersecurity in just 60 seconds! 🔒 🧑‍💻
+#AI #CyberSecurity #Tech #Innovation #Hack
 
 Return ONLY the description, nothing else."""
 
@@ -420,7 +433,7 @@ Return ONLY the description, nothing else."""
 
         if get_verbose():
             info(f" => Title ({len(title)} chars): {title}")
-            info(f" => Description: {description[:100]}...")
+            info(f" => Description: {description[:120]}...")
 
         return self.metadata
 

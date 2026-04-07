@@ -10,14 +10,27 @@ OPTIONS = [
     "Twitter Bot",
     "Affiliate Marketing",
     "Outreach",
-    "Quit"
+    "Quit",
 ]
 
 TWITTER_OPTIONS = [
-    "Post something",
+    "Post generated content (Topic-based)",
+    "Scrape & Post localized viral meme",
+    "Reply to localized viral tweets",
     "Show all Posts",
     "Setup CRON Job",
-    "Quit"
+    "Quit",
+]
+
+MEME_SUBREDDITS = [
+    "memes",
+    "dankmemes",
+    "me_irl",
+    "AdviceAnimals",
+    "funny",
+    "Showerthoughts",
+    "worldnews",
+    "todayilearned",
 ]
 
 TWITTER_CRON_OPTIONS = [

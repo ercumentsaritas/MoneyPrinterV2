@@ -359,6 +359,9 @@ def api_generate_twitter():
             if action == "viral_meme":
                 _generation_state.update(step="Scraping & Posting Viral Meme...", progress=50)
                 tw.fetch_and_post_viral_meme()
+            elif action == "reply_viral":
+                _generation_state.update(step="Finding and replying to viral tweets...", progress=50)
+                tw.reply_to_viral_tweets()
             else:
                 _generation_state.update(step="Posting Topic Content...", progress=50)
                 tw.post()

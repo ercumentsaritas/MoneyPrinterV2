@@ -74,12 +74,12 @@ def get_accounts(provider: str) -> List[dict]:
 
     if not os.path.exists(cache_path):
         # Create the cache file
-        with open(cache_path, 'w') as file:
+        with open(cache_path, 'w', encoding='utf-8') as file:
             json.dump({
                 "accounts": []
             }, file, indent=4)
 
-    with open(cache_path, 'r') as file:
+    with open(cache_path, 'r', encoding='utf-8') as file:
         parsed = json.load(file)
 
         if parsed is None:
@@ -111,7 +111,7 @@ def add_account(provider: str, account: dict) -> None:
     accounts.append(account)
 
     # Write the new accounts to the cache
-    with open(cache_path, 'w') as file:
+    with open(cache_path, 'w', encoding='utf-8') as file:
         json.dump({
             "accounts": accounts
         }, file, indent=4)
@@ -136,7 +136,7 @@ def remove_account(provider: str, account_id: str) -> None:
     # Write the new accounts to the cache
     cache_path = get_provider_cache_path(provider)
 
-    with open(cache_path, 'w') as file:
+    with open(cache_path, 'w', encoding='utf-8') as file:
         json.dump({
             "accounts": accounts
         }, file, indent=4)
@@ -150,12 +150,12 @@ def get_products() -> List[dict]:
     """
     if not os.path.exists(get_afm_cache_path()):
         # Create the cache file
-        with open(get_afm_cache_path(), 'w') as file:
+        with open(get_afm_cache_path(), 'w', encoding='utf-8') as file:
             json.dump({
                 "products": []
             }, file, indent=4)
 
-    with open(get_afm_cache_path(), 'r') as file:
+    with open(get_afm_cache_path(), 'r', encoding='utf-8') as file:
         parsed = json.load(file)
 
         # Get the products
@@ -178,7 +178,7 @@ def add_product(product: dict) -> None:
     products.append(product)
 
     # Write the new products to the cache
-    with open(get_afm_cache_path(), 'w') as file:
+    with open(get_afm_cache_path(), 'w', encoding='utf-8') as file:
         json.dump({
             "products": products
         }, file, indent=4)
