@@ -4213,3 +4213,422 @@ console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x800040
 console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
 Exiting due to channel error.
 Exiting due to channel error.
+1775589372648	geckodriver	INFO	Listening on 127.0.0.1:52422
+1775589375709	mozrunner::runner	INFO	Running command: "C:\\Program Files\\WindowsApps\\Mozilla.Firefox_149.0.0.0_x64__n80bbvh6b1yt2\\VFS\\ProgramFiles\\Firefox Pa ... zilla\\Firefox\\Profiles\\f8qqd7xg.default" "--remote-debugging-port" "52423" "--remote-allow-hosts" "localhost" "-no-remote"
+Read port: 57287
+1775589376554	Marionette	INFO	Marionette enabled
+1775589376588	Marionette	INFO	Listening on port 52456
+WebDriver BiDi listening on ws://127.0.0.1:52423
+console.error: NewTabGleanUtils: "Failed to complete registration of metrics and pings found in runtime metrics JSON:" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+Read port: 52456
+1775589378174	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: "Experiment visual-card-updates has unknown featureId: newtabRefinedCardsLayout"
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 944: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 944: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 944: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 944: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 944: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 944 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 944 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 944 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 944 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 944: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 944 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 944 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 944 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 944 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 6467: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 6467: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 6467: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 6467: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 6467: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6467 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6467 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6467 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 6467: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6467 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6467 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6467 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6467 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 1488: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 1488: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 1488: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1488: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1488: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1488 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1488 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1488 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1488 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1488: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1488 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1488 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1488 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1488 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 7056: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 7056: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 7056: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 7056: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 7056: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7056 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7056 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7056 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7056 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 7056: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7056 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7056 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7056 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7056 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 703: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 703: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 703: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 703: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 703: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 703 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 703 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 703 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 703 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 703: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 703 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 703 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 703 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 703 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 381: TypeError: can't access dead object
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 6291: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 6291: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 6291: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 6291: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 6291: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6291 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6291 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 6291: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6291 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6291 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6291 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6291 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 7580: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 7580: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 7580: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 7580: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 7580: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7580 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7580 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7580 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7580 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 7580: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7580 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7580 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7580 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7580 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 4076: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 4076: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 4076: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 4076: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 4076: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 4076 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 4076 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 4076 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 4076 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 4076: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 4076 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 4076 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 4076 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 4076 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://studio.youtube.com/s/_/creatorstudio/_/js/k=creatorstudio.cs.tr.P2yCdkIEy_0.es5.O/am=AAAAAIAi/d=1/excm=core/br=1/rs=ABMqQEtHUZgvu6YDnWjeRLeGoOdHDgH29w/m=core, line 53489: Script terminated by timeout at:
+tKd.prototype.transition@https://studio.youtube.com/s/_/creatorstudio/_/js/k=creatorstudio.cs.tr.P2yCdkIEy_0.es5.O/am=AAAAAIAi/d=1/excm=core/br=1/rs=ABMqQEtHUZgvu6YDnWjeRLeGoOdHDgH29w/m=core:53489:34
+KQe/<@https://studio.youtube.com/s/_/creatorstudio/_/js/k=creatorstudio.cs.tr.P2yCdkIEy_0.es5.O/am=AAAAAIAi/d=1/excm=core/br=1/rs=ABMqQEtHUZgvu6YDnWjeRLeGoOdHDgH29w/m=core:71208:114
+
+1775589576068	Marionette	INFO	Stopped listening on port 52456
+1775632510137	geckodriver	INFO	Listening on 127.0.0.1:60617
+1775632513190	mozrunner::runner	INFO	Running command: "C:\\Program Files\\WindowsApps\\Mozilla.Firefox_149.0.0.0_x64__n80bbvh6b1yt2\\VFS\\ProgramFiles\\Firefox Pa ... lla\\Firefox\\Profiles\\TPOfrPUX.Profile 1" "--remote-debugging-port" "60618" "--remote-allow-hosts" "localhost" "-no-remote"
+Read port: 56934
+1775632513882	Marionette	INFO	Marionette enabled
+1775632513911	Marionette	INFO	Listening on port 63254
+WebDriver BiDi listening on ws://127.0.0.1:60618
+console.error: NewTabGleanUtils: "Failed to complete registration of metrics and pings found in runtime metrics JSON:" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+Read port: 63254
+1775632515517	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: "Experiment visual-card-updates has unknown featureId: newtabRefinedCardsLayout"
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+1775632659947	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+e"
+Read port: 63254
+1775637330301	geckodriver	INFO	Listening on 127.0.0.1:59343
+1775637333319	mozrunner::runner	INFO	Running command: "C:\\Program Files\\WindowsApps\\Mozilla.Firefox_149.0.0.0_x64__n80bbvh6b1yt2\\VFS\\ProgramFiles\\Firefox Pa ... lla\\Firefox\\Profiles\\TPOfrPUX.Profile 1" "--remote-debugging-port" "59344" "--remote-allow-hosts" "localhost" "-no-remote"
+Read port: 63254
+1775637333848	Marionette	INFO	Marionette enabled
+1775637333878	Marionette	INFO	Listening on port 57994
+WebDriver BiDi listening on ws://127.0.0.1:59344
+console.error: NewTabGleanUtils: "Failed to complete registration of metrics and pings found in runtime metrics JSON:" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+console.error: "Experiment visual-card-updates has unknown featureId: newtabRefinedCardsLayout"
+Read port: 57994
+1775637335609	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1775637382878	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+1775637538606	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+ox\\Profiles\\TPOfrPUX.Profile 1" "--remote-debugging-port" "65032" "--remote-allow-hosts" "localhost" "-no-remote"
+Read port: 57994
+1775648471639	geckodriver	INFO	Listening on 127.0.0.1:62250
+1775648474729	mozrunner::runner	INFO	Running command: "C:\\Program Files\\WindowsApps\\Mozilla.Firefox_149.0.0.0_x64__n80bbvh6b1yt2\\VFS\\ProgramFiles\\Firefox Pa ... lla\\Firefox\\Profiles\\TPOfrPUX.Profile 1" "--remote-debugging-port" "62251" "--remote-allow-hosts" "localhost" "-no-remote"
+Read port: 57994
+1775648475637	Marionette	INFO	Marionette enabled
+1775648475670	Marionette	INFO	Listening on port 53848
+WebDriver BiDi listening on ws://127.0.0.1:62251
+Read port: 53848
+console.error: NewTabGleanUtils: "Failed to complete registration of metrics and pings found in runtime metrics JSON:" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+1775648477223	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: "Experiment visual-card-updates has unknown featureId: newtabRefinedCardsLayout"
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1775734251800	geckodriver	INFO	Listening on 127.0.0.1:51502
+1775734254855	mozrunner::runner	INFO	Running command: "C:\\Program Files\\WindowsApps\\Mozilla.Firefox_149.0.0.0_x64__n80bbvh6b1yt2\\VFS\\ProgramFiles\\Firefox Pa ... lla\\Firefox\\Profiles\\TPOfrPUX.Profile 1" "--remote-debugging-port" "51504" "--remote-allow-hosts" "localhost" "-no-remote"
+Read port: 53848
+1775734255709	Marionette	INFO	Marionette enabled
+1775734255749	Marionette	INFO	Listening on port 52215
+WebDriver BiDi listening on ws://127.0.0.1:51504
+console.error: NewTabGleanUtils: "Failed to complete registration of metrics and pings found in runtime metrics JSON:" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+Read port: 52215
+1775734257324	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: "Experiment visual-card-updates has unknown featureId: newtabRefinedCardsLayout"
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/vendor.f1dc7e4a.js, line 1: Error: invariant(...): Second argument must be a string.
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+JavaScript error: https://abs.twimg.com/responsive-web/client-web/main.48dc83ea.js, line 7: TypeError: can't access property "getIn", f.getBlockTree(...) is undefined
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1775734395042	geckodriver	INFO	Listening on 127.0.0.1:54719
+1775734398079	mozrunner::runner	INFO	Running command: "C:\\Program Files\\WindowsApps\\Mozilla.Firefox_149.0.0.0_x64__n80bbvh6b1yt2\\VFS\\ProgramFiles\\Firefox Pa ... lla\\Firefox\\Profiles\\TPOfrPUX.Profile 1" "--remote-debugging-port" "54720" "--remote-allow-hosts" "localhost" "-no-remote"
+Read port: 52215
+1775734398703	Marionette	INFO	Marionette enabled
+1775734398733	Marionette	INFO	Listening on port 54143
+WebDriver BiDi listening on ws://127.0.0.1:54720
+console.error: NewTabGleanUtils: "Failed to complete registration of metrics and pings found in runtime metrics JSON:" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+Read port: 54143
+1775734400424	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: "Experiment visual-card-updates has unknown featureId: newtabRefinedCardsLayout"
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+1775735608853	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+tils: "Failed to complete registration of metrics and pings found in runtime metrics JSON:" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+console.error: "Experiment visual-card-updates has unknown featureId: newtabRefinedCardsLayout"
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 1527: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 1527: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 1527: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1527: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1527: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1527 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1527 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1527 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1527 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1527: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1527 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1527 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1527 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 1527 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 6414: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 6414: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 6414: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 6414: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 6414: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6414 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6414 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6414 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 6414: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6414 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6414 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6414 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6414 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 6712: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 6712: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 6712: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 6712: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 6712: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6712 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6712 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6712 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6712 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 6712: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6712 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6712 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6712 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 6712 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 7401: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 7401: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 7401: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 7401: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 7401: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7401 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7401 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7401 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7401 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 7401: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7401 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7401 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7401 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 7401 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 3278: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 3278: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 3278: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 3278: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 3278: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 3278 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 3278 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 3278: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 3278 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 3278 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 3278 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 3278 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 458: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 458: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 458: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 458: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 458: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 458 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 458 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 458: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 458 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 458 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 458 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 458 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 3599: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 3599: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 3599: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 3599: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 3599: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 3599 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 3599 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 3599: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 3599 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 3599 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 3599 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 3599 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 966: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 966: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js, line 966: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 966: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 966: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 966 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 966 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval, line 966: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 966 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 966 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 966 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.google.com/js/th/MpFVpS6za11cXDTWd065JAGgAR0ZR_zlMnEKTNVzpUA.js line 2 > eval line 966 > eval line 1 > eval line 1 > eval, line 1: unreachable code after return statement
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+console.error: "buildList failed: " [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "<unknown>"  data: no]
+mote-debugging-port" "49674" "--remote-allow-hosts" "localhost" "-no-remote"
+Read port: 54143

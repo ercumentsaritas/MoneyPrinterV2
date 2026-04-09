@@ -446,7 +446,7 @@ class Twitter:
         """
         completion = generate_text(
             f"Generate a Twitter post about: {self.topic} in {get_twitter_language()}. "
-            "The Limit is 2 sentences. Choose a specific sub-topic of the provided topic."
+            "The limit is 2 sentences. Choose a specific sub-topic of the provided topic. DO NOT use emojis."
         )
 
         if get_verbose():
@@ -478,7 +478,7 @@ class Twitter:
             f"Reddit Başlığı: \"{reddit_title}\"\n\n"
             "Kurallar:\n"
             "- Maksimum 250 karakter\n"
-            "- 1-3 emoji kullan (doğal görünmeli)\n"
+            "- KESİNLİKLE EMOJİ KULLANMA\n"
             "- Hashtag KULLANMA\n"
             "- Sadece tweet metnini yaz, başka hiçbir şey ekleme\n"
             "- Alıntı işareti ve yıldız (*) kullanma"
@@ -743,7 +743,7 @@ class Twitter:
         prompt = (
             f"Aşağıdaki viral İngilizce tweeti/memeyi al ve Twitter (X) Türkiye kullanıcıları için en organik, "
             f"esprili ve doğal Türk internet argosuyla yerelleştir. Sadece basit bir çeviri yapma, Türkiye "
-            f"gündemiyle/kültürüyle uyumlu hale getir. Yalnızca son tweet metnini döndür.\n\n"
+            f"gündemiyle/kültürüyle uyumlu hale getir. Yalnızca son tweet metnini döndür. KESİNLİKLE EMOJİ KULLANMA.\n\n"
             f"Orijinal Tweet:\n\"{selected_text}\""
         )
         
@@ -873,15 +873,30 @@ class Twitter:
 
                 # Skip grey checkmark accounts (Government/Official)
                 try:
-                    user_name_elements = el.find_elements(By.XPATH, ".//div[@data-testid='User-Name']")
                     is_grey = False
-                    if user_name_elements:
-                        user_html = user_name_elements[0].get_attribute("innerHTML").lower()
-                        # X often adds specific labels or color hex codes for grey ticks
-                        if 'data-testid="icon-verified"' in user_html:
-                            if any(word in user_html for word in ["government", "devlet", "resmi", "official", "kurum", "#829", "rgb(130", "rgb(113", "#717"]):
+                    
+                    # 1. Check colors in verified icon specifically to avoid matching the gray @username text
+                    verified_icons = el.find_elements(By.XPATH, ".//svg[@data-testid='icon-verified']")
+                    for icon in verified_icons:
+                        icon_html = icon.get_attribute("outerHTML").lower()
+                        # Only searching for the specific grey hex/rgb colors within the SVG itself
+                        if any(color in icon_html for color in [
+                            "#829aab", "rgb(130, 154, 171)", "rgb(130,154,171)",
+                            "#71767b", "rgb(113, 118, 123)", "rgb(113,118,123)"
+                        ]):
+                            is_grey = True
+                            break
+                    
+                    # 2. Check for explicit government labels in the User-Name element's HTML
+                    if not is_grey:
+                        user_name_divs = el.find_elements(By.XPATH, ".//div[@data-testid='User-Name']")
+                        if user_name_divs:
+                            user_html = user_name_divs[0].get_attribute("innerHTML").lower()
+                            if any(badge in user_html for badge in [
+                                "government account", "devlet", "resmi hesap"
+                            ]):
                                 is_grey = True
-
+                                
                     if is_grey:
                         if verbose:
                             info(f"Skipping tweet {t_id} as it belongs to a grey/official checkmark account.")
