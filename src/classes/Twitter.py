@@ -25,7 +25,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from deep_translator import GoogleTranslator
 from classes.RedditScraper import (
     fetch_viral_posts,
+    fetch_viral_video_posts,
     download_image,
+    download_reddit_video,
     select_best_post,
     get_temp_image_paths,
 )
@@ -94,6 +96,48 @@ class Twitter:
 
         # Translator for LLM fallback
         self._translator: Optional[GoogleTranslator] = None
+
+    def _dismiss_popups(self) -> None:
+        """
+        Dismiss any overlay popups / info dialogs that Twitter/X may show
+        (e.g. 'Görüntülemeler' views dialog, cookie banners, etc.).
+        Tries several strategies; silently ignores if nothing is found.
+        """
+        from selenium.webdriver.common.keys import Keys
+        bot = self.browser
+        strategies = [
+            # 1. "Gizle" / "Dismiss" / "Got it" / "Not now" buttons
+            (By.XPATH, "//button[.//span[contains(text(),'Gizle')]]"),
+            (By.XPATH, "//button[.//span[contains(text(),'Dismiss')]]"),
+            (By.XPATH, "//button[.//span[contains(text(),'Got it')]]"),
+            (By.XPATH, "//button[.//span[contains(text(),'Not now')]]"),
+            (By.XPATH, "//button[.//span[contains(text(),'Şimdi değil')]]"),
+            (By.XPATH, "//button[.//span[contains(text(),'Tamam')]]"),
+            # 2. Generic close / X button inside layers
+            (By.XPATH, "//div[@data-testid='sheetDialog']//button[@aria-label='Close']"),
+            (By.XPATH, "//div[@data-testid='sheetDialog']//button[@aria-label='Kapat']"),
+            (By.XPATH, "//div[contains(@class,'Layer')]//button[@aria-label='Close']"),
+            (By.XPATH, "//div[contains(@class,'Layer')]//button[@aria-label='Kapat']"),
+            (By.CSS_SELECTOR, "div[role='dialog'] button[aria-label='Close']"),
+            (By.CSS_SELECTOR, "div[role='dialog'] button[aria-label='Kapat']"),
+            # 3. Generic dialog dismiss button (any role=dialog button)
+            (By.XPATH, "//div[@role='dialog']//button[.//span[contains(text(),'Gizle')]]"),
+        ]
+        for selector in strategies:
+            try:
+                btn = bot.find_element(*selector)
+                if btn.is_displayed():
+                    btn.click()
+                    time.sleep(0.5)
+                    return
+            except Exception:
+                continue
+        # 4. Fallback: press Escape to close any modal
+        try:
+            bot.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+            time.sleep(0.3)
+        except Exception:
+            pass
 
     def _human_pause(self, min_sec: float = 1.0, max_sec: float = 3.5) -> None:
         """
@@ -313,6 +357,7 @@ class Twitter:
 
         bot.get("https://x.com/compose/post")
         self._human_pause(2.0, 4.0)
+        self._dismiss_popups()
 
         post_content: str = text if text is not None else self.generate_post()
         now: datetime = datetime.now()
@@ -481,12 +526,14 @@ class Twitter:
             "- KESİNLİKLE EMOJİ KULLANMA\n"
             "- Hashtag KULLANMA\n"
             "- Sadece tweet metnini yaz, başka hiçbir şey ekleme\n"
-            "- Alıntı işareti ve yıldız (*) kullanma"
+            "- Alıntı işareti ve yıldız (*) kullanma\n"
+            "- Noktalama işaretlerini minimum düzeyde kullan. Twitter'da insanlar cümle sonu nokta koymaz virgülü de nadiren kullanır"
         )
 
     def fetch_and_post_viral_meme(self) -> None:
         """
-        Full pipeline: Reddit → LLM localization → optional image anon → Twitter post.
+        Full pipeline: Reddit → LLM localization → video/image → Twitter post.
+        Tries video posts first, falls back to image posts.
         """
         verbose = get_verbose()
 
@@ -494,40 +541,52 @@ class Twitter:
         if not self._enforce_shadowban_rules():
             return
 
-        # 1. Choose subreddit and fetch posts
+        # 1. Choose subreddit and try video posts first, then image posts
         subreddit = random.choice(MEME_SUBREDDITS)
         if verbose:
             info(f"Fetching viral posts from r/{subreddit}...")
 
-        posts = fetch_viral_posts(subreddit, limit=25, time_filter="day")
-        if not posts:
-            # Fallback to week if day fails
+        # Try video posts first
+        video_posts = fetch_viral_video_posts(subreddit, limit=25, time_filter="day")
+        if not video_posts:
             if verbose:
-                warning("No posts found for 'day', trying 'week'...")
-            posts = fetch_viral_posts(subreddit, limit=25, time_filter="week")
+                warning("No video posts found for 'day', trying 'week'...")
+            video_posts = fetch_viral_video_posts(subreddit, limit=25, time_filter="week")
 
-        if not posts:
+        used_ids = self._get_used_reddit_ids()
+        selected = None
+        is_video_post = False
+        image_posts = []
+
+        if video_posts:
+            selected = select_best_post(video_posts, used_ids)
+            if selected:
+                is_video_post = True
+
+        # Fall back to image posts if no video
+        if not selected:
+            image_posts = fetch_viral_posts(subreddit, limit=25, time_filter="day")
+            if not image_posts:
+                if verbose:
+                    warning("No image posts found for 'day', trying 'week'...")
+                image_posts = fetch_viral_posts(subreddit, limit=25, time_filter="week")
+            if image_posts:
+                selected = select_best_post(image_posts, used_ids)
+
+        if not selected:
             error("No suitable Reddit posts found.")
             return
 
-        # 2. Cache-based duplicate guard
-        used_ids = self._get_used_reddit_ids()
-        selected = select_best_post(posts, used_ids)
-        if not selected:
-            error("All Reddit candidates were already used. Try again later.")
-            return
-
-        # 2.b Simple subreddit rotation: avoid using same subreddit twice in a row if possible
+        # 2.b Simple subreddit rotation
         last_meme = self._get_last_meme_post()
 
         reddit_id = selected["id"]
         reddit_title = selected["title"]
         subreddit_name = selected["subreddit"]
-        image_url = selected["image_url"]
 
         if last_meme and last_meme.get("reddit_subreddit") == subreddit_name:
-            # Try to pick an alternative subreddit post if available
-            alt = [p for p in posts if p.get("subreddit") != subreddit_name and p.get("id") not in used_ids]
+            all_posts = (video_posts or []) + (image_posts or [])
+            alt = [p for p in all_posts if p.get("subreddit") != subreddit_name and p.get("id") not in used_ids]
             if alt:
                 alt_selected = select_best_post(alt, used_ids)
                 if alt_selected:
@@ -535,10 +594,11 @@ class Twitter:
                     reddit_id = selected["id"]
                     reddit_title = selected["title"]
                     subreddit_name = selected["subreddit"]
-                    image_url = selected["image_url"]
+                    is_video_post = "video_url" in selected
 
         if verbose:
-            info(f"Selected Reddit post: [{subreddit_name}] {reddit_title[:80]}...")
+            media_type = "video" if is_video_post else "image/text"
+            info(f"Selected Reddit post ({media_type}): [{subreddit_name}] {reddit_title[:80]}...")
 
         # 3. LLM localization
         prompt = self._build_localization_prompt(reddit_title, subreddit_name)
@@ -557,51 +617,65 @@ class Twitter:
             if len(body) >= 260:
                 body = body[:257].rsplit(" ", 1)[0] + "..."
 
-        # 4/5. Optional image download + anonymization
+        # 4/5. Media download (video or image)
         temp_paths = get_temp_image_paths()
-        image_to_upload = None
+        media_to_upload = None
 
-        # Decide whether we WANT an image for this run (60/40 mix rule)
-        want_image = image_url and self._should_use_image_this_time()
-
-        if want_image:
-            if verbose:
-                info(f"Downloading image from Reddit: {image_url}")
-            # Determine correct extension from URL
-            url_lower = image_url.lower()
-            if url_lower.endswith(".png"):
-                ext = ".png"
-            elif url_lower.endswith(".gif"):
-                ext = ".gif"
-            else:
-                ext = ".jpg"
-            raw_save_path = os.path.splitext(temp_paths["raw"])[0] + ext
-            anon_save_path = os.path.splitext(temp_paths["anon"])[0] + ext
-
-            raw_path = download_image(image_url, raw_save_path)
-            if raw_path:
-                # Skip anonymization for GIFs (would destroy animation)
-                if ext == ".gif":
-                    image_to_upload = raw_path
+        if is_video_post:
+            video_url = selected.get("video_url")
+            if video_url:
+                if verbose:
+                    info(f"Downloading video from Reddit: {video_url}")
+                video_path = download_reddit_video(
+                    video_url, temp_paths["video"], temp_paths["video_audio"]
+                )
+                if video_path:
+                    media_to_upload = video_path
                     if verbose:
-                        info("GIF detected — skipping anonymization to preserve animation.")
+                        info("Reddit video downloaded successfully.")
                 else:
-                    try:
-                        anon_path = anonymize_image(raw_path, anon_save_path)
-                        image_to_upload = anon_path
+                    warning("Video download failed. Proceeding with text-only tweet.")
+        else:
+            image_url = selected.get("image_url")
+            want_image = image_url and self._should_use_image_this_time()
+
+            if want_image:
+                if verbose:
+                    info(f"Downloading image from Reddit: {image_url}")
+                url_lower = image_url.lower()
+                if url_lower.endswith(".png"):
+                    ext = ".png"
+                elif url_lower.endswith(".gif"):
+                    ext = ".gif"
+                else:
+                    ext = ".jpg"
+                raw_save_path = os.path.splitext(temp_paths["raw"])[0] + ext
+                anon_save_path = os.path.splitext(temp_paths["anon"])[0] + ext
+
+                raw_path = download_image(image_url, raw_save_path)
+                if raw_path:
+                    if ext == ".gif":
+                        media_to_upload = raw_path
                         if verbose:
-                            info("Image anonymization succeeded.")
-                    except Exception as e:
-                        warning(f"Image anonymization failed, using raw image: {e}")
-                        image_to_upload = raw_path
-            else:
-                warning("Image download failed. Proceeding with text-only tweet.")
+                            info("GIF detected — skipping anonymization to preserve animation.")
+                    else:
+                        try:
+                            anon_path = anonymize_image(raw_path, anon_save_path)
+                            media_to_upload = anon_path
+                            if verbose:
+                                info("Image anonymization succeeded.")
+                        except Exception as e:
+                            warning(f"Image anonymization failed, using raw image: {e}")
+                            media_to_upload = raw_path
+                else:
+                    warning("Image download failed. Proceeding with text-only tweet.")
 
         # 6–12. Compose and post on Twitter with human-like behavior
         try:
             bot: webdriver.Firefox = self.browser
             bot.get("https://x.com/compose/post")
             self._human_pause(2.0, 4.0)
+            self._dismiss_popups()
 
             body_text = body
             now: datetime = datetime.now()
@@ -630,14 +704,14 @@ class Twitter:
                     "Could not find tweet text box. Ensure you are logged into X in this Firefox profile."
                 )
 
-            # Optional image upload — check return value
-            if image_to_upload:
+            # Optional media upload (video or image)
+            if media_to_upload:
                 if verbose:
-                    info("Uploading anonymized image to Twitter...")
-                uploaded = self._upload_image(image_to_upload)
+                    info(f"Uploading {'video' if is_video_post else 'image'} to Twitter...")
+                uploaded = self._upload_image(media_to_upload)
                 if not uploaded:
-                    warning("Image upload failed — posting as text-only.")
-                    image_to_upload = None
+                    warning("Media upload failed — posting as text-only.")
+                    media_to_upload = None
 
             post_button = None
             post_button_selectors = [
@@ -668,19 +742,19 @@ class Twitter:
                 "reddit_title": reddit_title,
                 "reddit_subreddit": subreddit_name,
                 "reddit_permalink": selected.get("permalink"),
-                "has_image": bool(image_to_upload),
+                "has_image": bool(media_to_upload) and not is_video_post,
+                "has_video": bool(media_to_upload) and is_video_post,
             }
             self.add_post(post_record)
             self._mark_reddit_id_used(reddit_id)
 
             success("Posted localized Reddit meme to Twitter successfully!")
         finally:
-            # 14. Best-effort temp cleanup — runs even on exception
+            # Best-effort temp cleanup — runs even on exception
             for path in temp_paths.values():
                 try:
-                    # Also clean extension-variant temp files
                     base = os.path.splitext(path)[0]
-                    for variant in [base + ".jpg", base + ".png", base + ".gif"]:
+                    for variant in [base + ".jpg", base + ".png", base + ".gif", base + ".mp4"]:
                         if os.path.exists(variant):
                             os.remove(variant)
                 except Exception:
@@ -702,6 +776,7 @@ class Twitter:
 
         # wait for tweets to load
         time.sleep(5)
+        self._dismiss_popups()
         
         tweet_elements = []
         try:
@@ -827,43 +902,157 @@ class Twitter:
         with open(get_twitter_cache_path(), "w") as f:
             json.dump(previous_json, f, indent=4)
 
-    def reply_to_viral_tweets(self) -> None:
+    @staticmethod
+    def _parse_engagement_count(raw: str) -> int:
         """
-        Finds viral Turkish tweets (100k+ views approx 2500+ likes) and replies to one of them.
+        Parse an engagement number string from Twitter aria-labels.
+        Handles formats like:
+          - "5234"          → 5234
+          - "5.234"         → 5234   (Turkish thousands separator)
+          - "5,234"         → 5234   (English thousands separator)
+          - "12.4K"/"12,4K" → 12400
+          - "1.2M"/"1,2M"  → 1200000
+          - "3B"            → 3000000000 (English billion) — unlikely on TR
+          - "3 B"           → 3000   (Turkish 'bin' = thousand — handled by caller)
+        Returns 0 if unparseable.
+        """
+        s = raw.strip().upper()
+        if not s:
+            return 0
+
+        multiplier = 1
+        # Turkish: "B" = bin (thousand), "Mn" = milyon; English: "K" = thousand, "M" = million
+        if s.endswith("MN"):
+            multiplier = 1_000_000
+            s = s[:-2]
+        elif s.endswith("M"):
+            multiplier = 1_000_000
+            s = s[:-1]
+        elif s.endswith("K"):
+            multiplier = 1_000
+            s = s[:-1]
+        elif s.endswith("B"):
+            # Turkish "B" = bin = thousand (e.g. "12,4B" = 12400)
+            multiplier = 1_000
+            s = s[:-1]
+
+        # Normalize decimal separators: Turkish uses comma as decimal, period as thousands
+        # If multiplier > 1, the separator is a decimal point (e.g. "12.4K" or "12,4K")
+        if multiplier > 1:
+            s = s.replace(",", ".")
+            try:
+                return int(float(s) * multiplier)
+            except (ValueError, OverflowError):
+                return 0
+        else:
+            # No suffix — raw integer with possible thousands separators
+            s = s.replace(".", "").replace(",", "")
+            try:
+                return int(s)
+            except (ValueError, OverflowError):
+                return 0
+
+    def _is_promoted_tweet(self, el) -> bool:
+        """
+        Check if a tweet article element is a promoted/ad tweet.
+        Uses multiple detection strategies for reliability.
+        """
+        # Strategy 1: Twitter's own tracking testid for ads
+        try:
+            tracking = el.find_elements(By.XPATH, ".//*[@data-testid='placementTracking']")
+            if tracking:
+                return True
+        except Exception:
+            pass
+
+        # Strategy 2: Check for promo labels in the social context area
+        # Twitter shows "Promoted" / "Sponsorlu" / "Tanıtılan" as a small label
+        promo_keywords = [
+            "Promoted", "Sponsorlu", "Tanıtılan", "Tanıtım",
+            "Gesponsert", "Sponsorisé", "Promocionado",
+        ]
+        try:
+            # The promo label sits inside a specific span — look for exact or near-exact matches
+            social_context = el.find_elements(
+                By.XPATH,
+                ".//div[@data-testid='socialContext']//span | "
+                ".//span[@data-testid='annotationText']"
+            )
+            for span in social_context:
+                span_text = span.text.strip()
+                if span_text in promo_keywords:
+                    return True
+        except Exception:
+            pass
+
+        # Strategy 3: Broader sweep — check all small spans for exact promo text
+        # (do NOT use contains() to avoid false positives like "Adam")
+        try:
+            all_spans = el.find_elements(By.XPATH, ".//span")
+            for span in all_spans:
+                text = span.text.strip()
+                if text in promo_keywords:
+                    return True
+        except Exception:
+            pass
+
+        # Strategy 4: Check for ad disclosure links (i.e. "Why this ad?" / "Bu reklam neden gösteriliyor?")
+        try:
+            ad_links = el.find_elements(
+                By.XPATH,
+                ".//a[contains(@href, 'ads_transparency')] | "
+                ".//a[contains(@href, 'why-this-ad')]"
+            )
+            if ad_links:
+                return True
+        except Exception:
+            pass
+
+        return False
+
+    def _find_viral_tweet_from_timeline(self) -> Optional[dict]:
+        """
+        Navigate to X home timeline, scroll, and find a suitable viral tweet to interact with.
+        Returns dict with keys: tweet_id, tweet_url, tweet_text; or None if no suitable tweet found.
         """
         bot: webdriver.Firefox = self.browser
         verbose: bool = get_verbose()
 
         if verbose:
-            info(" => Navigating to X search for viral tweets to reply...")
+            info(" => Navigating to X home timeline...")
 
-        search_url = "https://x.com/search?q=min_faves%3A2500%20lang%3Atr%20-filter%3Alinks%20-filter%3Areplies&src=typed_query&f=top"
-        bot.get(search_url)
-
+        bot.get("https://x.com/home")
         time.sleep(5)
-        
-        tweet_elements = []
+        self._dismiss_popups()
+
+        # Scroll more aggressively to load a bigger pool of candidate tweets
         try:
             self.wait.until(EC.presence_of_element_located((By.XPATH, "//article[@data-testid='tweet']")))
-            bot.execute_script("window.scrollTo(0, 800);")
-            time.sleep(3)
-            tweet_elements = bot.find_elements(By.XPATH, "//article[@data-testid='tweet']")
+            scroll_count = random.randint(4, 7)
+            for _ in range(scroll_count):
+                bot.execute_script("window.scrollBy(0, 700);")
+                time.sleep(random.uniform(1.5, 3.0))
+                self._dismiss_popups()
         except Exception as e:
-            error(f"Could not fetch viral tweets for reply: {e}")
-            return
+            error(f"Could not load timeline tweets: {e}")
+            return None
 
+        tweet_elements = bot.find_elements(By.XPATH, "//article[@data-testid='tweet']")
         if not tweet_elements:
-            error("No viral tweets found on the search page.")
-            return
+            error("No tweets found on the timeline.")
+            return None
+
+        if verbose:
+            info(f" => Found {len(tweet_elements)} tweet elements on timeline.")
 
         used_replied = self._get_used_replied_ids()
 
-        selected_tweet_url = None
-        selected_tweet_text = None
-        selected_tweet_id = None
+        # Minimum like threshold — lowered for Turkish timeline compatibility
+        MIN_LIKES = 100
 
         for el in tweet_elements:
             try:
+                # Get tweet URL from the timestamp link
                 time_link = el.find_element(By.XPATH, ".//a[contains(@href, '/status/')]")
                 tweet_url = time_link.get_attribute("href")
                 t_id = tweet_url.split("/status/")[1].split("/")[0].split("?")[0]
@@ -871,23 +1060,26 @@ class Twitter:
                 if t_id in used_replied:
                     continue
 
+                # Skip promoted / ad tweets with robust detection
+                if self._is_promoted_tweet(el):
+                    if verbose:
+                        info(f"Skipping tweet {t_id} — promoted/ad tweet.")
+                    continue
+
                 # Skip grey checkmark accounts (Government/Official)
                 try:
                     is_grey = False
-                    
-                    # 1. Check colors in verified icon specifically to avoid matching the gray @username text
+
                     verified_icons = el.find_elements(By.XPATH, ".//svg[@data-testid='icon-verified']")
                     for icon in verified_icons:
                         icon_html = icon.get_attribute("outerHTML").lower()
-                        # Only searching for the specific grey hex/rgb colors within the SVG itself
                         if any(color in icon_html for color in [
                             "#829aab", "rgb(130, 154, 171)", "rgb(130,154,171)",
                             "#71767b", "rgb(113, 118, 123)", "rgb(113,118,123)"
                         ]):
                             is_grey = True
                             break
-                    
-                    # 2. Check for explicit government labels in the User-Name element's HTML
+
                     if not is_grey:
                         user_name_divs = el.find_elements(By.XPATH, ".//div[@data-testid='User-Name']")
                         if user_name_divs:
@@ -896,28 +1088,70 @@ class Twitter:
                                 "government account", "devlet", "resmi hesap"
                             ]):
                                 is_grey = True
-                                
+
                     if is_grey:
                         if verbose:
-                            info(f"Skipping tweet {t_id} as it belongs to a grey/official checkmark account.")
+                            info(f"Skipping tweet {t_id} — grey/official checkmark account.")
                         continue
                 except Exception:
                     pass
 
+                # Parse engagement count from like button aria-label
+                like_count = 0
+                try:
+                    like_btn = el.find_element(By.XPATH, ".//button[@data-testid='like']")
+                    aria = like_btn.get_attribute("aria-label") or ""
+                    # Aria-label format examples:
+                    #   EN: "12400 Likes. Like"  /  "1.2K Likes. Like"
+                    #   TR: "5234 Beğeni. Beğen"  /  "12,4B Beğeni. Beğen"
+                    # Extract the first token that looks numeric
+                    for token in aria.strip().split():
+                        parsed = self._parse_engagement_count(token)
+                        if parsed > 0:
+                            like_count = parsed
+                            break
+                except Exception:
+                    pass
+
+                if like_count < MIN_LIKES:
+                    if verbose and like_count > 0:
+                        info(f"Skipping tweet {t_id} — likes ({like_count}) below threshold ({MIN_LIKES}).")
+                    continue
+
+                # Get tweet text
                 tweet_text_el = el.find_element(By.XPATH, ".//div[@data-testid='tweetText']")
                 text = tweet_text_el.text.strip()
-                
-                if len(text) > 15:
-                    selected_tweet_id = t_id
-                    selected_tweet_url = tweet_url
-                    selected_tweet_text = text
-                    break
+                if len(text) < 15:
+                    continue
+
+                if verbose:
+                    info(f" => Found suitable tweet (likes: {like_count}): {text[:50]}...")
+
+                return {
+                    "tweet_id": t_id,
+                    "tweet_url": tweet_url,
+                    "tweet_text": text,
+                }
             except Exception:
                 continue
 
-        if not selected_tweet_id:
-            error("No valid unreplied viral tweets found.")
+        return None
+
+    def reply_to_viral_tweets(self) -> None:
+        """
+        Finds viral tweets from the home timeline and replies to one of them.
+        """
+        bot: webdriver.Firefox = self.browser
+        verbose: bool = get_verbose()
+
+        tweet_data = self._find_viral_tweet_from_timeline()
+        if not tweet_data:
+            error("No valid unreplied viral tweets found on timeline.")
             return
+
+        selected_tweet_id = tweet_data["tweet_id"]
+        selected_tweet_url = tweet_data["tweet_url"]
+        selected_tweet_text = tweet_data["tweet_text"]
 
         if verbose:
             info(f" => Selected tweet to reply to: {selected_tweet_url}")
@@ -929,7 +1163,9 @@ class Twitter:
             "Yanıtını her zaman rahat takılan genç bir İstanbullu erkeğin ağzından, maskülen/delikanlı ama esprili bir dille yaz. "
             "Asla 'evet haklısın', 'katılıyorum' gibi bot tarzı klişe yanıtlar verme. Özgün, viral olma potansiyeli yüksek, laf sokmalı, övücü veya çok absürt komik bir şey olsun.\n\n"
             f"Orijinal Tweet: \"{selected_tweet_text}\"\n\n"
-            "ÇOK ÖNEMLİ: Hiçbir açıklama, giriş cümlesi veya yorum EKLEME! KESİNLİKLE EMOJI KULLANMA! Yalnızca JSON formatında yanıt ver. "
+            "ÇOK ÖNEMLİ: Hiçbir açıklama, giriş cümlesi veya yorum EKLEME! KESİNLİKLE EMOJI KULLANMA! "
+            "Noktalama işaretlerini minimum düzeyde kullan. Twitter'da insanlar cümle sonu nokta koymaz virgülü de nadiren kullanır. "
+            "Yalnızca JSON formatında yanıt ver. "
             "Format: {\"tweet\": \"<sadece üretilen yanıt>\"}"
         )
 
@@ -965,6 +1201,7 @@ class Twitter:
 
         bot.get(selected_tweet_url)
         self._human_pause(3.0, 5.0)
+        self._dismiss_popups()
 
         reply_box_selectors = [
             (By.CSS_SELECTOR, "div[data-testid='tweetTextarea_0'][role='textbox']"),
@@ -1021,3 +1258,186 @@ class Twitter:
         self._mark_replied_id_used(selected_tweet_id)
 
         success("Replied to viral tweet successfully!")
+
+    def quote_viral_tweet(self) -> None:
+        """
+        Finds viral tweets from the home timeline and quotes one of them.
+        """
+        bot: webdriver.Firefox = self.browser
+        verbose: bool = get_verbose()
+
+        tweet_data = self._find_viral_tweet_from_timeline()
+        if not tweet_data:
+            error("No valid viral tweets found on timeline for quoting.")
+            return
+
+        selected_tweet_id = tweet_data["tweet_id"]
+        selected_tweet_url = tweet_data["tweet_url"]
+        selected_tweet_text = tweet_data["tweet_text"]
+
+        if verbose:
+            info(f" => Selected tweet to quote: {selected_tweet_url}")
+            info(f" => Original Tweet Text: {selected_tweet_text[:50]}...")
+
+        prompt = (
+            "Sen \u00e7ok y\u00fcksek etkile\u015fimli, esprit\u00fcel ve sevilen gen\u00e7 bir erkek T\u00fcrk Gen-Z Twitter (X) kullan\u0131c\u0131s\u0131s\u0131n. "
+            "A\u015fa\u011f\u0131da verilen pop\u00fcler, viral T\u00fcrk\u00e7e tweeti al\u0131nt\u0131layarak ataca\u011f\u0131n organik, zekice ve k\u0131sa bir yorum olu\u015ftur (maksimum 1 c\u00fcmle). "
+            "Yorumunu her zaman rahat tak\u0131lan gen\u00e7 bir \u0130stanbullu erke\u011fin a\u011fz\u0131ndan, mask\u00fclen/delikanlı ama esprili bir dille yaz. "
+            "Al\u0131nt\u0131lad\u0131\u011f\u0131n tweete bir bak\u0131\u015f a\u00e7\u0131s\u0131 kat, laf sok, espri yap veya abs\u00fcrt bir \u015fekilde yorumla.\n\n"
+            f"Orijinal Tweet: \"{selected_tweet_text}\"\n\n"
+            "\u00c7OK \u00d6NEML\u0130 KURALLAR:\n"
+            "- Hi\u00e7bir a\u00e7\u0131klama, giri\u015f c\u00fcmlesi veya yorum EKLEME\n"
+            "- KES\u0130NL\u0130KLE EMOJI KULLANMA\n"
+            "- Noktalama i\u015faretlerini minimum d\u00fczeyde kullan. Twitter'da insanlar c\u00fcmle sonu nokta koymaz virg\u00fcl\u00fc de nadiren kullan\u0131r\n"
+            "- Yaln\u0131zca JSON format\u0131nda yan\u0131t ver. Format: {\"tweet\": \"<sadece \u00fcretilen yorum>\"}"
+        )
+
+        completion = generate_text(prompt)
+        if not completion:
+            error("Failed to generate a quote tweet. Please try again.")
+            return
+
+        try:
+            json_str = completion
+            if "```json" in json_str:
+                json_str = json_str.split("```json")[1].split("```")[0].strip()
+            elif "```" in json_str:
+                json_str = json_str.split("```")[1].split("```")[0].strip()
+
+            start_idx = json_str.find("{")
+            end_idx = json_str.rfind("}") + 1
+            if start_idx != -1 and end_idx != 0:
+                json_str = json_str[start_idx:end_idx]
+
+            parsed = json.loads(json_str)
+            completion = parsed.get("tweet", completion)
+        except Exception:
+            pass
+
+        completion = re.sub(r"\*", "", completion).replace('"', "").strip()
+        if len(completion) > 200:
+            completion = completion[:197].rsplit(" ", 1)[0] + "..."
+
+        if verbose:
+            info(f" => Generated Quote: {completion}")
+
+        # Navigate to the tweet page and use native Quote flow
+        bot.get(selected_tweet_url)
+        self._human_pause(3.0, 5.0)
+        self._dismiss_popups()
+
+        # Click the retweet button to open the menu
+        retweet_btn = None
+        try:
+            retweet_btn = WebDriverWait(bot, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "//button[@data-testid='retweet']"))
+            )
+            self._human_pause(0.5, 1.5)
+            retweet_btn.click()
+        except Exception:
+            # Maybe already retweeted — try unretweet button
+            try:
+                retweet_btn = WebDriverWait(bot, 5).until(
+                    EC.element_to_be_clickable((By.XPATH, "//button[@data-testid='unretweet']"))
+                )
+                self._human_pause(0.5, 1.5)
+                retweet_btn.click()
+                # After unretweeting, need to click retweet again
+                self._human_pause(1.0, 2.0)
+                retweet_btn = WebDriverWait(bot, 5).until(
+                    EC.element_to_be_clickable((By.XPATH, "//button[@data-testid='retweet']"))
+                )
+                retweet_btn.click()
+            except Exception as e:
+                error(f"Could not find retweet button: {e}")
+                return
+
+        self._human_pause(1.0, 2.0)
+
+        # Select "Quote" from the dropdown menu
+        quote_option = None
+        quote_selectors = [
+            (By.XPATH, "//a[contains(@href, '/compose/post')]//span[contains(text(), 'Quote')]"),
+            (By.XPATH, "//a[contains(@href, '/compose/post')]//span[contains(text(), 'Alıntıla')]"),
+            (By.XPATH, "//a[contains(@href, '/compose/post')]"),
+            (By.XPATH, "//div[@data-testid='Dropdown']//a[contains(@href, '/compose/')]"),
+        ]
+
+        for selector in quote_selectors:
+            try:
+                quote_option = WebDriverWait(bot, 5).until(
+                    EC.element_to_be_clickable(selector)
+                )
+                self._human_pause(0.5, 1.0)
+                quote_option.click()
+                break
+            except Exception:
+                continue
+
+        if quote_option is None:
+            error("Could not find the 'Quote' option in the retweet menu.")
+            return
+
+        self._human_pause(2.0, 4.0)
+
+        # Type the quote comment into the compose box
+        text_box = None
+        text_box_selectors = [
+            (By.CSS_SELECTOR, "div[data-testid='tweetTextarea_0'][role='textbox']"),
+            (By.XPATH, "//div[@data-testid='tweetTextarea_0']//div[@role='textbox']"),
+            (By.XPATH, "//div[@role='textbox']"),
+        ]
+
+        for selector in text_box_selectors:
+            try:
+                text_box = self.wait.until(EC.element_to_be_clickable(selector))
+                text_box.click()
+                self._human_pause(0.5, 1.5)
+                self._human_type(text_box, completion)
+                break
+            except Exception:
+                continue
+
+        if text_box is None:
+            error("Could not find tweet text box for quote tweet.")
+            return
+
+        # Wait for the quote card preview to load
+        self._human_pause(2.0, 3.0)
+
+        post_button = None
+        post_button_selectors = [
+            (By.XPATH, "//button[@data-testid='tweetButtonInline']"),
+            (By.XPATH, "//button[@data-testid='tweetButton']"),
+            (By.XPATH, "//span[text()='Post']/ancestor::button"),
+            (By.XPATH, "//span[text()='Göndermek']/ancestor::button"),
+        ]
+
+        for selector in post_button_selectors:
+            try:
+                post_button = self.wait.until(EC.element_to_be_clickable(selector))
+                self._human_pause(1.0, 2.5)
+                post_button.click()
+                break
+            except Exception:
+                continue
+
+        if post_button is None:
+            error("Could not find the Post button for quote tweet.")
+            return
+
+        self._human_pause(2.0, 4.0)
+
+        now: datetime = datetime.now()
+        post_record = {
+            "content": f"[QUOTE] {completion}",
+            "date": now.strftime("%m/%d/%Y, %H:%M:%S"),
+            "is_quote": True,
+            "quoted_tweet_id": selected_tweet_id,
+            "quoted_tweet_url": selected_tweet_url,
+            "original_text": selected_tweet_text
+        }
+        self.add_post(post_record)
+        self._mark_replied_id_used(selected_tweet_id)
+
+        success("Quote tweeted successfully!")

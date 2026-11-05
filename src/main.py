@@ -302,6 +302,8 @@ def main():
                     elif user_input == 3:
                         twitter.reply_to_viral_tweets()
                     elif user_input == 4:
+                        twitter.quote_viral_tweet()
+                    elif user_input == 5:
                         posts = twitter.get_posts()
 
                         posts_table = PrettyTable()
@@ -316,7 +318,7 @@ def main():
                             ])
 
                         print(posts_table)
-                    elif user_input == 5:
+                    elif user_input == 6:
                         info("How often do you want to post?")
 
                         info("\n============ OPTIONS ============", False)
@@ -350,7 +352,7 @@ def main():
                             success("Set up CRON Job.")
                         else:
                             break
-                    elif user_input == 6:
+                    elif user_input == 7:
                         if get_verbose():
                             info(" => Climbing Options Ladder...", False)
                         break

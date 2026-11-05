@@ -362,6 +362,9 @@ def api_generate_twitter():
             elif action == "reply_viral":
                 _generation_state.update(step="Finding and replying to viral tweets...", progress=50)
                 tw.reply_to_viral_tweets()
+            elif action == "quote_viral":
+                _generation_state.update(step="Finding and quoting viral tweet...", progress=50)
+                tw.quote_viral_tweet()
             else:
                 _generation_state.update(step="Posting Topic Content...", progress=50)
                 tw.post()

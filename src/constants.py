@@ -16,21 +16,21 @@ OPTIONS = [
 TWITTER_OPTIONS = [
     "Post generated content (Topic-based)",
     "Scrape & Post localized viral meme",
-    "Reply to localized viral tweets",
+    "Reply to viral tweets",
+    "Quote viral tweet",
     "Show all Posts",
     "Setup CRON Job",
     "Quit",
 ]
 
 MEME_SUBREDDITS = [
-    "memes",
-    "dankmemes",
-    "me_irl",
-    "AdviceAnimals",
-    "funny",
-    "Showerthoughts",
-    "worldnews",
-    "todayilearned",
+    "Turkey",
+    "TurkeyJerky",
+    "kgbtr",
+    "burdurland",
+    "shitposTC",
+    "Turkishcats",
+    "Multecistan",
 ]
 
 TWITTER_CRON_OPTIONS = [
